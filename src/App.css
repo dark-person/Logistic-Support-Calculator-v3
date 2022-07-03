@@ -20,7 +20,20 @@
 .topbar {
   background-color: #BB86FC;
   color: black;
-  border-radius: 5px;
   padding-top: 0.3em;
   padding-bottom: 0.3em;
+  margin-top: 0;
+}
+
+.grid {
+  background-color: #272727;
+  border-radius: 10px;
+  padding: 1rem;
+  height: 100%!important;
+  text-align: left;
+}
+
+.grid-title {
+  text-decoration: underline;
+  margin-top: 0;
 }
