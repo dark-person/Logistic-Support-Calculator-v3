@@ -52,7 +52,7 @@ function ChapterMenu(props){
 
 function ChapterMenuCol(props){
 	return (
-        <Col xs={true}>
+        <Col xs={true} className="mb-2">
             <ChapterMenu {...props}/>
         </Col>    
 	);

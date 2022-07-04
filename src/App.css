@@ -25,10 +25,12 @@
   margin-top: 0;
 }
 
+/*======= Grid ==============*/
+
 .grid {
   background-color: #272727;
   border-radius: 10px;
-  padding: 1rem;
+  padding: 1em;
   height: 100%!important;
   text-align: left;
 }
@@ -36,4 +38,50 @@
 .grid-title {
   text-decoration: underline;
   margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
+/* ========= Purple Button  ===========*/
+
+.btn-outline-purple.active {
+  color: #121212;
+  background-color: #DBB1FA;
+  border-color: #DBB1FA;
+} 
+
+.btn-outline-purple.active:hover {
+  color: #121212;
+  background-color: #DBB1FA;
+  border-color: #DBB1FA;
+} 
+
+.btn-outline-purple{
+  color: #DBB1FA;
+  border-color: #DBB1FA;
+}
+
+.btn-outline-purple:hover{
+  color: #DBB1FA;
+  border-color: #DBB1FA;
+}
+
+/* ==== Input ====*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input.form-control {
+  background-color: #272727;
+  color: lightgrey;
+  height:-webkit-fill-available;
+  width:auto;
+}
+
+input.form-control:focus {
+  border: 3px solid white;
+  background-color: #272727;
+  color: white;
+  width:auto;
 }
