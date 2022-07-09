@@ -37,19 +37,11 @@
 
 .grid-title {
   text-decoration: underline;
-  margin-top: 0;
-  margin-bottom: 0.5em;
 }
 
 /* ========= Purple Button  ===========*/
 
 .btn-outline-purple.active {
-  color: #121212;
-  background-color: #DBB1FA;
-  border-color: #DBB1FA;
-} 
-
-.btn-outline-purple.active:hover {
   color: #121212;
   background-color: #DBB1FA;
   border-color: #DBB1FA;
@@ -61,8 +53,9 @@
 }
 
 .btn-outline-purple:hover{
-  color: #DBB1FA;
+  color: black;
   border-color: #DBB1FA;
+  background-color: #DBB1FA;
 }
 
 /* ==== Input ====*/
@@ -84,4 +77,23 @@ input.form-control:focus {
   background-color: #272727;
   color: white;
   width:auto;
+}
+
+/* ===== Form Label =====*/
+.form-label {
+  font-weight: bold;
+}
+
+.form-label.allow {
+  background-color: lightgreen;
+  color: black;
+  border-radius: 0.5em;
+  padding: 0.5em;
+}
+
+.form-label.not-allow {
+  background-color: lightcoral;
+  color: black;
+  border-radius: 0.5em;
+  padding: 0.5em;
 }

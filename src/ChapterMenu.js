@@ -22,7 +22,7 @@ function ChapterCheckBox({id, state, handler}){
 function ChapterMenu(props){
     return (
         <div className="grid">
-            <h2 className="grid-title">戰役進度</h2>
+            <h2 className="grid-title mb-3">戰役進度</h2>
             <Form>
 				{       
 					data.chapterList.map(item =>

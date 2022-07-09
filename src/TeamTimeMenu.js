@@ -15,7 +15,7 @@ import './App.css'
 function TeamMenu({state, handler}){
     return (
         <div>
-            <h2 className="grid-title">梯隊數</h2>
+            <h2 className="grid-title mb-3">梯隊數</h2>
             <ToggleButtonGroup name="team-toggle" type="radio" value={state} onChange={handler}>
                 <ToggleButton id="toggle-team-1" variant="outline-purple" className={1 === state ? "active" : ""} value={1}>1</ToggleButton>
                 <ToggleButton id="toggle-team-2" variant="outline-purple" className={2 === state ? "active" : ""} value={2}>2</ToggleButton>
@@ -30,8 +30,8 @@ function TeamMenu({state, handler}){
 function TimeMenu({hour, minute, hourHandler, minuteHandler}){
     return (
         <div>
-            <h2 className="grid-title">間隔時間</h2>
-            <Form>
+            <h2 className="grid-title mb-3">間隔時間</h2>
+            <Form className="align-items-center">
                 <Form.Group  as={Row} className="px-3">
                     <Form.Control className="col p-1" as="input" 
                         type="number" min="0" max="24"
