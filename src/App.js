@@ -76,6 +76,7 @@ function App() {
 
   function handleResoureChange(event, field){
     let value = event.target.value;
+    value = (value < Number(event.target.min) ? event.target.min : value);
     switch(field) {
       case "manpower": 
         setManpower(value);
@@ -129,6 +130,33 @@ function App() {
     setAllowZero(true);
   }
 
+  function handleItemChange(event, field){
+    let target = event.target;
+    let value = (target.value ?
+      Math.max(Number(target.min), Math.min(Number(target.max), Number(target.value))) :
+      target.value);
+
+    switch(field){
+      case 'quickRestoration' :
+        setQuickRestoration(value)
+        break
+      case 'quickProduction':
+        setQuickProduction(value)
+        break
+      case 'dollContract':
+        setDollContract(value)
+        break
+      case 'equipmentContract':
+        setEquipmentContract(value)
+        break
+      case 'token':
+        setToken(value)
+        break
+      default:
+        console.log("Unknown Error on function handleItemChange", field)
+    }
+  }
+
   return (
     <div className="App">
       <Topbar />
@@ -141,7 +169,11 @@ function App() {
           <WeightMenuCol manpower={manpower} ammo={ammo} ration={ration} part={part} allowZero={allowZero}
             handler={handleResoureChange} triple={handleTriple} setZero={handleAllowZero} reset={ResetWeight}/>
           <EasterEggCol />
-          <ItemMenuCol />
+        </Row>
+        <Row className="h-100">
+          <ItemMenuCol quickRestoration={quickRestoration} quickProduction={quickProduction}
+            equipmentContract={equipmentContract} dollContract={dollContract}
+            token={token} handler={handleItemChange}/>
         </Row>
       </Container>
 

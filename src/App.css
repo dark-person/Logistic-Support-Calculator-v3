@@ -79,6 +79,10 @@ input.form-control:focus {
   width:auto;
 }
 
+.item-input {
+  width: 5em !important;
+}
+
 /* ===== Form Label =====*/
 .form-label {
   font-weight: bold;
