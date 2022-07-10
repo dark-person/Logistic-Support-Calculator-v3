@@ -3,6 +3,8 @@ import Topbar from './Topbar'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+
+import Accordion from 'react-bootstrap/Accordion'
 import {useState} from "react"
 
 import ChapterMenuCol from './ChapterMenu'
@@ -10,6 +12,8 @@ import TeamTimeMenuCol from './TeamTimeMenu'
 import WeightMenuCol from './WeightMenu'
 import EasterEggCol from './EasterEgg'
 import ItemMenuCol from './ItemMenu'
+import DisplayMenuCol from './DisplayMenu'
+
 
 let data = require("./supportData.json")
 
@@ -39,6 +43,8 @@ function App() {
   const [dollContract, setDollContract] = useState(0)
   const [equipmentContract, setEquipmentContract] = useState(0)
   const [token, setToken] = useState(0)
+
+  // Display Setting
 
   function handleChapterChange(event, id){
     let temp = chapterState;
@@ -174,6 +180,16 @@ function App() {
           <ItemMenuCol quickRestoration={quickRestoration} quickProduction={quickProduction}
             equipmentContract={equipmentContract} dollContract={dollContract}
             token={token} handler={handleItemChange}/>
+        </Row>
+        <Row className="h-100">
+          <Accordion defaultActiveKey="0">
+            <Accordion.Item className="dark-grid" eventKey="0">
+              <Accordion.Header className="dark-grid"><h2 className="grid-title">結果顯示選項</h2></Accordion.Header>
+              <Accordion.Body>
+                <DisplayMenuCol />
+              </Accordion.Body>   
+            </Accordion.Item>
+          </Accordion>
         </Row>
       </Container>
 

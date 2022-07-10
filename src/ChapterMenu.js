@@ -40,7 +40,7 @@ function ChapterMenu(props){
 				variant="outline-success"
 				onClick={props.selectAllHandler}>
 				全選
-			</Button> {''}
+			</Button> {' '}
 			<Button 
 				variant="outline-secondary"
 				onClick={props.clearAllHandler}>
