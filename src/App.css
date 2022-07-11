@@ -67,6 +67,11 @@
   box-shadow: none;
 }
 
+.accordion-collapse{
+  border-top: 1px dashed;
+  border-top-color: lightgray;
+}
+
 /* ========= Purple Button  ===========*/
 
 .btn-outline-purple.active {

@@ -23,6 +23,17 @@ const AllChapterState = new Array(data.chapterList.length).fill(true)
 // Const Array, meaning all chapter is NOT selected
 const emptyChapterState = new Array(data.chapterList.length).fill(false);
 
+// Default Value
+const defaultTeam = 4
+const defaultHour = 4
+const defaultMinute = 0
+// Resource is set as default show for DisplayMenu
+const defaultQuickRestoration = 0
+const defaultQuickProduction = 0
+const defaultDollContract = 0
+const defaultEquipmentContract = 0
+const defaultToken = 0
+
 function App() {
   // chapterState: state that used by checkbox
   const [chapterState, setChapterState] = useState(AllChapterState);
@@ -45,6 +56,17 @@ function App() {
   const [token, setToken] = useState(0)
 
   // Display Setting
+  const [showManpower, setShowManpower] = useState(true)
+  const [showAmmo, setShowAmmo] = useState(true)
+  const [showRation, setShowRation] = useState(true)
+  const [showPart, setShowPart] = useState(true)
+  const [showQuickRestoration, setShowQuickRestoration] = useState(false)
+  const [showQuickProduction, setShowQuickProduction] = useState(false)
+  const [showDollContract, setShowDollContract] = useState(false)
+  const [showEquipmentContract, setShowEquipmentContract] = useState(false)
+  const [showToken, setShowToken] = useState(false)
+  const [showTotalResource, setShowTotalResource] = useState(false)
+  const [showWeightedValue, setShowWeightedValue] = useState(false)
 
   function handleChapterChange(event, id){
     let temp = chapterState;
@@ -145,21 +167,66 @@ function App() {
     switch(field){
       case 'quickRestoration' :
         setQuickRestoration(value)
+        setShowQuickRestoration(value !== defaultQuickRestoration && value !== "")
         break
       case 'quickProduction':
         setQuickProduction(value)
-        break
+        setShowQuickProduction(value !== defaultQuickProduction && value !== "")
+        break 
       case 'dollContract':
         setDollContract(value)
+        setShowDollContract(value !== defaultDollContract && value !== "")
         break
       case 'equipmentContract':
         setEquipmentContract(value)
+        setShowEquipmentContract(value !== defaultEquipmentContract && value !== "")
         break
       case 'token':
         setToken(value)
+        setShowToken(value !== defaultToken && value !== "")
         break
       default:
         console.log("Unknown Error on function handleItemChange", field)
+    }
+  }
+
+  function handleDisplayChange(event, field){
+    switch(field) {
+      case "manpower" : 
+        setShowManpower(event.target.checked) 
+        break
+      case "ammo": 
+        setShowAmmo(event.target.checked)
+        break
+      case "ration":
+        setShowRation(event.target.checked)
+        break
+      case "part":
+        setShowPart(event.target.checked)
+        break
+      case "quickRestoration":
+        setShowQuickRestoration(event.target.checked)
+        break
+      case "quickProduction":
+        setShowQuickProduction(event.target.checked)
+        break
+      case "equipmentContract":
+        setShowEquipmentContract(event.target.checked)
+        break
+      case "dollContract":
+        setShowDollContract(event.target.checked)
+        break
+      case "token":
+        setShowToken(event.target.checked)
+        break
+      case "weighted-value":
+        setShowWeightedValue(event.target.checked)
+        break
+      case "total-resource":
+        setShowTotalResource(event.target.checked)
+        break
+      default:
+        console.log("Display Issue ,",field)
     }
   }
 
@@ -186,7 +253,13 @@ function App() {
             <Accordion.Item className="dark-grid" eventKey="0">
               <Accordion.Header className="dark-grid"><h2 className="grid-title">結果顯示選項</h2></Accordion.Header>
               <Accordion.Body>
-                <DisplayMenuCol />
+                <DisplayMenuCol 
+                  showManpower={showManpower} showAmmo={showAmmo} showRation={showRation} showPart={showPart}
+                  showQuickRestoration={showQuickRestoration} showQuickProduction={showQuickProduction}
+                  showEquipmentContract={showEquipmentContract} showDollContract={showDollContract}
+                  showToken={showToken}
+                  showWeightedValue={showWeightedValue} showTotalResource={showTotalResource} 
+                  handler={handleDisplayChange}/>
               </Accordion.Body>   
             </Accordion.Item>
           </Accordion>
