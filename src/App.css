@@ -72,6 +72,10 @@
   border-top-color: lightgray;
 }
 
+.modal-content {
+  color: black;
+}
+
 /* ========= Purple Button  ===========*/
 
 .btn-outline-purple.active {
@@ -133,4 +137,10 @@ input.form-control:focus {
   color: black;
   border-radius: 0.5em;
   padding: 0.5em;
+}
+  
+/* Description Usage */
+.caution-description {
+  color: #cf6679;
+  font-weight: 700;
 }
