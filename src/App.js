@@ -249,7 +249,7 @@ function App() {
             token={token} handler={handleItemChange}/>
         </Row>
         <Row className="h-100">
-          <Accordion defaultActiveKey="0">
+          <Accordion>
             <Accordion.Item className="dark-grid" eventKey="0">
               <Accordion.Header className="dark-grid"><h2 className="grid-title">結果顯示選項</h2></Accordion.Header>
               <Accordion.Body>

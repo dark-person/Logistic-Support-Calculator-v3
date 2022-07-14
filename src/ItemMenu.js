@@ -34,7 +34,6 @@ function ItemInputCol({label, state, handler}) {
 
 function ItemMenu({quickRestoration, quickProduction, dollContract, equipmentContract, token, handler}) {
     const [showModal, setShowModal] = useState(false)
-
     
     return(
         <div className="grid">
