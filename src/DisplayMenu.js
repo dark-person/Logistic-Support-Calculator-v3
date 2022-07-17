@@ -8,9 +8,9 @@ import Button from 'react-bootstrap/Button'
 
 import Accordion from 'react-bootstrap/Accordion'
 
-function DisplayMenu({showManpower, showAmmo, showRation, showPart,
+export function DisplayMenu({showManpower, showAmmo, showRation, showPart,
     showQuickRestoration, showQuickProduction, showEquipmentContract,showDollContract, showToken,
-    showWeightedValue, showTotalResource, handler}){
+    showWeightedValue, showTotalResource, handler, reset}){
     return (
         <div>
             <Form as={Row} className="align-items-center mb-3">
@@ -52,16 +52,16 @@ function DisplayMenu({showManpower, showAmmo, showRation, showPart,
                         checked={showTotalResource} onChange={(e) => handler(e, "total-resource")}/>
                 </Col>
             </Form>
+            <hr/>
+            <Button variant="secondary" onClick={reset}>回復預設</Button>
         </div>
     )
 }
 
-function DisplayMenuCol(props){
+export function DisplayMenuCol(props){
     return (
         <Col xs={true} className="mb-2">
             <DisplayMenu {...props} />
         </Col>
     )
 }
-
-export default DisplayMenuCol

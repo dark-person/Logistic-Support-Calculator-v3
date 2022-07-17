@@ -12,8 +12,11 @@ import TeamTimeMenuCol from './TeamTimeMenu'
 import WeightMenuCol from './WeightMenu'
 import EasterEggCol from './EasterEgg'
 import ItemMenuCol from './ItemMenu'
-import DisplayMenuCol from './DisplayMenu'
+import {DisplayMenuCol, DisplayMenu} from './DisplayMenu'
+import Button from 'react-bootstrap/Button'
+import ResultAreaCol from "./ResultArea"
 
+import * as utils from "./calculate.js"
 
 let data = require("./supportData.json")
 
@@ -67,6 +70,9 @@ function App() {
   const [showToken, setShowToken] = useState(false)
   const [showTotalResource, setShowTotalResource] = useState(false)
   const [showWeightedValue, setShowWeightedValue] = useState(false)
+
+  // Result Data
+  const [data, setData] = useState([])
 
   function handleChapterChange(event, id){
     let temp = chapterState;
@@ -230,6 +236,31 @@ function App() {
     }
   }
 
+  function handleDisplayReset(){
+    setShowManpower(true)
+    setShowAmmo(true)
+    setShowRation(true)
+    setShowPart(true)
+
+    setShowQuickRestoration(quickRestoration !== defaultQuickRestoration)
+    setShowQuickProduction(quickProduction !== defaultQuickProduction)
+    setShowDollContract(dollContract !== defaultDollContract)
+    setShowEquipmentContract(equipmentContract !== defaultEquipmentContract)
+    setShowToken(token !== defaultToken)
+
+    setShowTotalResource(false)
+    setShowWeightedValue(false)
+  }
+
+  function handleSubmit() {
+    console.log("Submit Pressed")
+    let filteredSupport = utils.filterSupport(chapterState, hour, minute)
+
+    let temp = utils.calculateResult(filteredSupport, team, manpower, ammo, ration, part, allowZero, quickRestoration, quickProduction, dollContract, equipmentContract, token)
+
+    setData(temp)
+  }
+
   return (
     <div className="App">
       <Topbar />
@@ -243,27 +274,60 @@ function App() {
             handler={handleResoureChange} triple={handleTriple} setZero={handleAllowZero} reset={ResetWeight}/>
           <EasterEggCol />
         </Row>
+
         <Row className="h-100">
           <ItemMenuCol quickRestoration={quickRestoration} quickProduction={quickProduction}
             equipmentContract={equipmentContract} dollContract={dollContract}
             token={token} handler={handleItemChange}/>
         </Row>
+
         <Row className="h-100">
-          <Accordion>
-            <Accordion.Item className="dark-grid" eventKey="0">
-              <Accordion.Header className="dark-grid"><h2 className="grid-title">結果顯示選項</h2></Accordion.Header>
-              <Accordion.Body>
-                <DisplayMenuCol 
-                  showManpower={showManpower} showAmmo={showAmmo} showRation={showRation} showPart={showPart}
-                  showQuickRestoration={showQuickRestoration} showQuickProduction={showQuickProduction}
-                  showEquipmentContract={showEquipmentContract} showDollContract={showDollContract}
-                  showToken={showToken}
-                  showWeightedValue={showWeightedValue} showTotalResource={showTotalResource} 
-                  handler={handleDisplayChange}/>
-              </Accordion.Body>   
-            </Accordion.Item>
-          </Accordion>
+          <Col xs={true} className="mb-2">
+            <Accordion>
+              <Accordion.Item className="dark-grid" eventKey="0">
+                <Accordion.Header className="dark-grid"><h2 className="grid-title">結果顯示選項</h2></Accordion.Header>
+                <Accordion.Body>
+                  <DisplayMenu
+                    showManpower={showManpower} showAmmo={showAmmo} showRation={showRation} showPart={showPart}
+                    showQuickRestoration={showQuickRestoration} showQuickProduction={showQuickProduction}
+                    showEquipmentContract={showEquipmentContract} showDollContract={showDollContract}
+                    showToken={showToken}
+                    showWeightedValue={showWeightedValue} showTotalResource={showTotalResource} 
+                    handler={handleDisplayChange} reset={handleDisplayReset}/>
+                </Accordion.Body>   
+              </Accordion.Item>
+            </Accordion>
+          </Col> 
         </Row>
+
+        <Row className="h-100">
+          <Col xs={true} className="mb-2">
+            <div className="dark-grid">
+              <Row className="text-center">
+                <Col xl={{offset:1, span:4}} lg={{offset: 2, span: 2}} md={{offset: 3, span: 2}} sm={{offset: 1, span: 4}} xs={{offset:1, span:4}}>
+                  <Button variant="danger">重設</Button>
+                </Col>
+                <Col xl={{offset:1, span:4}} lg={{offset: 3, span: 2}} md={{offset: 1, span: 2}} sm={{offset: 2, span: 4}} xs={{offset:1, span:4}}>
+                  <Button variant="success" onClick={handleSubmit}>計算</Button>
+                </Col>
+              </Row>
+            </div>
+          </Col>
+        </Row>
+
+        {
+          data.length > 0 && 
+          <Row className="h-100">
+            <ResultAreaCol data={data} 
+              showManpower={showManpower} showAmmo={showAmmo} showRation={showRation} showPart={showPart} 
+              showQuickRestoration={showQuickRestoration} showQuickProduction={showQuickProduction} 
+              showEquipmentContract={showEquipmentContract} showDollContract={showDollContract} 
+              showToken={showToken} 
+              showTotalResource={showTotalResource} showWeightedValue={showWeightedValue}/>
+          </Row>
+        }
+       
+
       </Container>
 
     </div>

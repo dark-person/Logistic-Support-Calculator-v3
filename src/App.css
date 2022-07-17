@@ -17,6 +17,10 @@
   color: #61dafb;
 }
 
+.scrollable{
+  overflow: scroll;
+}
+
 .topbar {
   background-color: #BB86FC;
   color: black;
@@ -143,4 +147,9 @@ input.form-control:focus {
 .caution-description {
   color: #cf6679;
   font-weight: 700;
+}
+
+/*  ===== Table ========*/
+.table>:not(:first-child) {
+  border-top: 2px solid darkgray;
 }
