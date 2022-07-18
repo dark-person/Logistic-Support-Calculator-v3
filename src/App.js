@@ -17,6 +17,7 @@ import Button from 'react-bootstrap/Button'
 import ResultAreaCol from "./ResultArea"
 
 import * as utils from "./calculate.js"
+import * as table_utils from "./tableUtils.js"
 
 let data = require("./supportData.json")
 
@@ -73,6 +74,7 @@ function App() {
 
   // Result Data
   const [data, setData] = useState([])
+  const [style, setStyle] = useState({})
 
   function handleChapterChange(event, id){
     let temp = chapterState;
@@ -231,6 +233,19 @@ function App() {
       case "total-resource":
         setShowTotalResource(event.target.checked)
         break
+      case "select-all":
+        setShowManpower(true)
+        setShowAmmo(true)
+        setShowRation(true)
+        setShowPart(true)
+        setShowQuickRestoration(true)
+        setShowQuickProduction(true)
+        setShowDollContract(true)
+        setShowEquipmentContract(true)
+        setShowToken(true)
+        setShowWeightedValue(true)
+        setShowTotalResource(true)
+        break
       default:
         console.log("Display Issue ,",field)
     }
@@ -256,9 +271,25 @@ function App() {
     console.log("Submit Pressed")
     let filteredSupport = utils.filterSupport(chapterState, hour, minute)
 
-    let temp = utils.calculateResult(filteredSupport, team, manpower, ammo, ration, part, allowZero, quickRestoration, quickProduction, dollContract, equipmentContract, token)
+    let temp_data = utils.calculateResult(filteredSupport, team, manpower, ammo, ration, part, allowZero, quickRestoration, quickProduction, dollContract, equipmentContract, token)
+    
+    let temp_style = {
+      combination : table_utils.getStyleSheet(temp_data, "combination"),
+      manpower: table_utils.getStyleSheet(temp_data, "manpower"),
+      ammo: table_utils.getStyleSheet(temp_data, "ammo"),
+      ration: table_utils.getStyleSheet(temp_data, "ration"),
+      part: table_utils.getStyleSheet(temp_data, "part"),
+      quickRestoration: table_utils.getStyleSheet(temp_data, "quickRestoration"),
+      quickProduction: table_utils.getStyleSheet(temp_data, "quickProduction"),
+      tDollContract: table_utils.getStyleSheet(temp_data, "tDollContract"),
+      equipmentContract: table_utils.getStyleSheet(temp_data, "equipmentContract"),
+      token: table_utils.getStyleSheet(temp_data, "token"),
+      value: table_utils.getStyleSheet(temp_data, "value"),
+      totalResource: table_utils.getStyleSheet(temp_data, "totalResource")
+    }
 
-    setData(temp)
+    setData(temp_data)
+    setStyle(temp_style)
   }
 
   return (
@@ -318,7 +349,7 @@ function App() {
         {
           data.length > 0 && 
           <Row className="h-100">
-            <ResultAreaCol data={data} 
+            <ResultAreaCol data={data} styleObj={style}
               showManpower={showManpower} showAmmo={showAmmo} showRation={showRation} showPart={showPart} 
               showQuickRestoration={showQuickRestoration} showQuickProduction={showQuickProduction} 
               showEquipmentContract={showEquipmentContract} showDollContract={showDollContract} 

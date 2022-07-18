@@ -5,105 +5,68 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Table from 'react-bootstrap/Table'
 
-const fieldLabel = {
-    combination: "後勤組合",
-    manpower: "人力/次",
-    ammo: "彈藥/次",
-    ration: "口糧/次",
-    part: "零件/次",
-    quickRestoration: "快速修理契約",
-    quickProduction: "快速製造契約",
-    tDollContract: "人形契約",
-    equipmentContract: "裝備契約",
-    token: "採購幣",
-    value: "值",
-    totalResource: "資源總量"
-}
+import * as table_utils from './tableUtils.js'
 
-const getColumnWidth = (rows, accessor, headerText) => {
-    const maxWidth = 200
-    const magicSpacing = 20
-      const cellLength = Math.max(
-        ...rows.map(row => (`${row[accessor]}` || '').length),
-          headerText.length,
-        )
-      return Math.min(maxWidth, cellLength * magicSpacing)+1
-  }
-
-const getStyleSheet = (raw_data, field_name) =>  {
-    if (field_name === 'combination'){
-        return {
-            width: getColumnWidth(raw_data, field_name, fieldLabel[field_name])
-        }
-    } else {
-        return {
-            width: getColumnWidth(raw_data, field_name, fieldLabel[field_name]),
-            textAlign: "center"
-        }
-    }
-}
-
-function DataRow({rowData, showManpower, showAmmo, showRation, showPart, 
+function DataRow({rowData, styleObj, showManpower, showAmmo, showRation, showPart, 
     showQuickRestoration, showQuickProduction, showEquipmentContract, showDollContract, showToken, 
     showTotalResource, showWeightedValue}){
     return (
-        <tr>
-            <td>{rowData.combination}</td>
-            <td>{rowData.manpower}</td>
-            {/* {showManpower && <td>{rowData.manpower}</td>} */}
-			<td>{rowData.ammo}</td>
-			<td>{rowData.ration}</td>
-			<td>{rowData.part}</td>
-			<td>{rowData.quickRestoration}</td>
-			<td>{rowData.quickProduction}</td>
-			<td >{rowData.tDollContract}</td>
-			<td>{rowData.equipmentContract}</td>
-			<td>{rowData.token}</td>
-			<td>{rowData.value}</td>
-			<td>{rowData.totalResource}</td>
+        <tr className="d-flex">
+            <td style={styleObj.combination}>{rowData.combination}</td>
+            {showManpower && <td style={styleObj.manpower}>{rowData.manpower}</td>}
+			{showAmmo && <td style={styleObj.ammo}>{rowData.ammo}</td>}
+			{showRation && <td style={styleObj.ration}>{rowData.ration}</td>}
+			{showPart && <td style={styleObj.part}>{rowData.part}</td>}
+			{showQuickRestoration && <td style={styleObj.quickRestoration}>{rowData.quickRestoration}</td>}
+			{showQuickProduction && <td style={styleObj.quickProduction}>{rowData.quickProduction}</td>}
+			{showDollContract && <td style={styleObj.tDollContract}>{rowData.tDollContract}</td>}
+			{showEquipmentContract && <td style={styleObj.equipmentContract}>{rowData.equipmentContract}</td>}
+			{showToken && <td style={styleObj.token}>{rowData.token}</td>}
+			{showWeightedValue && <td style={styleObj.value}>{rowData.value}</td>}
+			{showTotalResource && <td style={styleObj.totalResource}>{rowData.totalResource}</td>}
         </tr>
     )
 }
 
-function TableHeader({showManpower, showAmmo, showRation, showPart, 
+function TableHeader({styleObj, showManpower, showAmmo, showRation, showPart, 
     showQuickRestoration, showQuickProduction, showEquipmentContract, showDollContract, showToken, 
     showTotalResource, showWeightedValue}) {
     return (
-        <tr>
-            <th>{fieldLabel.combination}</th>
-            <th>{fieldLabel.manpower}</th>
-            {/* {showManpower && <th>{fieldLabel.manpower}</th>}             */}
-            <th>{fieldLabel.ammo}</th>
-            <th>{fieldLabel.ration}</th>
-            <th>{fieldLabel.part}</th>
-            <th>{fieldLabel.quickRestoration}</th>
-            <th>{fieldLabel.quickProduction}</th>
-            <th>{fieldLabel.tDollContract}</th>
-            <th>{fieldLabel.equipmentContract}</th>
-            <th>{fieldLabel.token}</th>
-            <th>{fieldLabel.value}</th>
-            <th>{fieldLabel.totalResource}</th>
+        <tr className="d-flex">
+            <th style={styleObj.combination}>{table_utils.fieldLabel.combination}</th>
+            {showManpower && <th style={styleObj.manpower}>{table_utils.fieldLabel.manpower}</th>}
+            {showAmmo && <th style={styleObj.ammo}>{table_utils.fieldLabel.ammo}</th>}
+            {showRation &&<th style={styleObj.ration}>{table_utils.fieldLabel.ration}</th>}
+            {showPart && <th style={styleObj.part}>{table_utils.fieldLabel.part}</th>}
+            {showQuickRestoration && <th style={styleObj.quickRestoration}>{table_utils.fieldLabel.quickRestoration}</th>}
+            {showQuickProduction && <th style={styleObj.quickProduction}>{table_utils.fieldLabel.quickProduction}</th>}
+            {showDollContract && <th style={styleObj.tDollContract}>{table_utils.fieldLabel.tDollContract}</th>}
+            {showEquipmentContract && <th style={styleObj.equipmentContract}>{table_utils.fieldLabel.equipmentContract}</th>}
+            {showToken && <th style={styleObj.token}>{table_utils.fieldLabel.token}</th>}
+            {showWeightedValue && <th style={styleObj.value}>{table_utils.fieldLabel.value}</th>}
+            {showTotalResource && <th style={styleObj.totalResource}>{table_utils.fieldLabel.totalResource}</th>}
         </tr>
     )
 }
 
 
-function ResultArea({data, showManpower, showAmmo, showRation, showPart, 
+function ResultArea({data, styleObj, showManpower, showAmmo, showRation, showPart, 
     showQuickRestoration, showQuickProduction, showEquipmentContract, showDollContract, showToken, 
     showTotalResource, showWeightedValue}){
+                
     return (
         <div className="grid scrollable">
             <Table striped bordered hover size="sm" variant="dark">	
                 <thead>
-                    <TableHeader showManpower={showManpower} showAmmo={showAmmo} showRation={showRation} showPart={showPart} 
+                    <TableHeader styleObj={styleObj} showManpower={showManpower} showAmmo={showAmmo} showRation={showRation} showPart={showPart} 
                         showQuickRestoration={showQuickRestoration} showQuickProduction={showQuickProduction} 
                         showEquipmentContract={showEquipmentContract} showDollContract={showDollContract} 
                         showToken={showToken} showTotalResource={showTotalResource}
                         showWeightedValue={showWeightedValue}/>
                 </thead>
                 <tbody>
-                    {data.map(item => 
-                        <DataRow rowData={item} showManpower={showManpower} showAmmo={showAmmo} showRation={showRation} showPart={showPart} 
+                    {data.map((item, index) => 
+                        <DataRow key={"data-"+index} rowData={item} styleObj={styleObj} showManpower={showManpower} showAmmo={showAmmo} showRation={showRation} showPart={showPart} 
                         showQuickRestoration={showQuickRestoration} showQuickProduction={showQuickProduction} 
                         showEquipmentContract={showEquipmentContract} showDollContract={showDollContract} 
                         showToken={showToken} showTotalResource={showTotalResource}

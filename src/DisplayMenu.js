@@ -6,8 +6,6 @@ import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 
-import Accordion from 'react-bootstrap/Accordion'
-
 export function DisplayMenu({showManpower, showAmmo, showRation, showPart,
     showQuickRestoration, showQuickProduction, showEquipmentContract,showDollContract, showToken,
     showWeightedValue, showTotalResource, handler, reset}){
@@ -53,7 +51,8 @@ export function DisplayMenu({showManpower, showAmmo, showRation, showPart,
                 </Col>
             </Form>
             <hr/>
-            <Button variant="secondary" onClick={reset}>回復預設</Button>
+            <Button variant="secondary" onClick={reset}>回復預設</Button>{'  '}
+            <Button variant="success" onClick={(e) => handler(e, "select-all")}>全部選擇</Button>
         </div>
     )
 }

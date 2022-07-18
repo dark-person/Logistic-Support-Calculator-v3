@@ -67,7 +67,7 @@ function AddSupportData(accumulator, current) {
     if (accumulator.combination === ""){
         accumulator.combination = current.code
     } else {
-        accumulator.combination +=  "," + current.code
+        accumulator.combination +=  ", " + current.code
     }
 
     accumulator.manpower += current.manpower
