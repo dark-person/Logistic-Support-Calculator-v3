@@ -166,6 +166,41 @@ function App() {
     setAllowZero(true);
   }
 
+  function ResetItem() {
+    setQuickRestoration(0)
+    setQuickProduction(0)
+    setDollContract(0)
+    setEquipmentContract(0)
+    setToken(0)
+
+    // Force to Change value
+    setShowManpower(true)
+    setShowAmmo(true)
+    setShowRation(true)
+    setShowPart(true)
+    setShowQuickRestoration(false)
+    setShowQuickProduction(false)
+    setShowDollContract(false)
+    setShowEquipmentContract(false)
+    setShowToken(false)
+    setShowTotalResource(false)
+    setShowWeightedValue(false)
+  }
+  
+
+  function ResetAll(){
+    // Reset All to default
+    selectAllChapters()
+    
+    setTeam(4)
+    setHour(4)
+    setMinute(0)
+    
+    ResetWeight()
+
+    ResetItem()
+  }
+
   function handleItemChange(event, field){
     let target = event.target;
     let value = (target.value ?
@@ -309,7 +344,7 @@ function App() {
         <Row className="h-100">
           <ItemMenuCol quickRestoration={quickRestoration} quickProduction={quickProduction}
             equipmentContract={equipmentContract} dollContract={dollContract}
-            token={token} handler={handleItemChange}/>
+            token={token} handler={handleItemChange} reset={ResetItem}/>
         </Row>
 
         <Row className="h-100">
@@ -336,7 +371,7 @@ function App() {
             <div className="dark-grid">
               <Row className="text-center">
                 <Col xl={{offset:1, span:4}} lg={{offset: 2, span: 2}} md={{offset: 3, span: 2}} sm={{offset: 1, span: 4}} xs={{offset:1, span:4}}>
-                  <Button variant="danger">重設</Button>
+                  <Button variant="danger" onClick={ResetAll}>全部重設</Button>
                 </Col>
                 <Col xl={{offset:1, span:4}} lg={{offset: 3, span: 2}} md={{offset: 1, span: 2}} sm={{offset: 2, span: 4}} xs={{offset:1, span:4}}>
                   <Button variant="success" onClick={handleSubmit}>計算</Button>

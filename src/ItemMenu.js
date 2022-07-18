@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal'
+import Button from 'react-bootstrap/Button'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleQuestion} from '@fortawesome/free-solid-svg-icons'
@@ -32,7 +33,7 @@ function ItemInputCol({label, state, handler}) {
     )
 }
 
-function ItemMenu({quickRestoration, quickProduction, dollContract, equipmentContract, token, handler}) {
+function ItemMenu({quickRestoration, quickProduction, dollContract, equipmentContract, token, handler, reset}) {
     const [showModal, setShowModal] = useState(false)
     
     return(
@@ -46,6 +47,7 @@ function ItemMenu({quickRestoration, quickProduction, dollContract, equipmentCon
                 <ItemInputCol label="裝備契約" state={equipmentContract} handler={(e) => handler(e, "equipmentContract")}/>
                 <ItemInputCol label="人形契約" state={dollContract} handler={(e) => handler(e, "dollContract")}/>
                 <ItemInputCol label="採購幣" state={token} handler={(e) => handler(e, "token")}/>
+                <Col><Button variant="outline-secondary" onClick={reset}>重設道具次數</Button></Col>
             </Row>
             <Modal show={showModal} onHide={() => setShowModal(false)}>
                 <Modal.Header closeButton>
