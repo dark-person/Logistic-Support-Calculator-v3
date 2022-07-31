@@ -75,23 +75,44 @@ function App() {
   // Result Data
   const [data, setData] = useState([])
   const [style, setStyle] = useState({})
+  const [showAlert, setShowAlert] = useState(false)
+  const [showEmpty, setShowEmpty] = useState(false)
+
+  function notifyParamsChange(){
+    // Function that used to notify important variable changed
+    // Clear the Result, and show alert screen
+    if (data.length > 0){
+      setData([])
+      setShowAlert(true)
+      setTimeout(
+        ()=> setShowAlert(false),3000)  
+    }  
+
+    if (showEmpty) {
+      setShowEmpty(false)
+    }
+  }
 
   function handleChapterChange(event, id){
     let temp = chapterState;
     temp[id] = event.target.checked;
     setChapterState([...temp]);
+    notifyParamsChange()
   }
 
   function selectAllChapters() {
     setChapterState([...AllChapterState])
+    notifyParamsChange()
   }
 
   function clearAllChapters() {
     setChapterState([...emptyChapterState])
+    notifyParamsChange()
   }
 
   function handleTeamChange(value) {
     setTeam(value)
+    notifyParamsChange()
   }
 
   function handleHourChange(event){
@@ -100,6 +121,7 @@ function App() {
       Math.max(Number(target.min), Math.min(Number(target.max), Number(target.value))) :
       target.value);
     setHour(value);
+    notifyParamsChange()
   }
 
   function handleMinuteChange(event){
@@ -107,7 +129,8 @@ function App() {
     let value = (target.value ?
       Math.max(Number(target.min), Math.min(Number(target.max), Number(target.value))) :
       target.value);
-    setMinute(value);
+    setMinute(value)
+    notifyParamsChange()
   }
 
   function handleResoureChange(event, field){
@@ -116,19 +139,23 @@ function App() {
     switch(field) {
       case "manpower": 
         setManpower(value);
-        console.log("manpower:",value);
+        notifyParamsChange()
+        console.log("manpower:",value)
         break;
       case "ammo":
-        setAmmo(value);
-        console.log("ammo:",value);
+        setAmmo(value)
+        notifyParamsChange()
+        console.log("ammo:",value)
         break;
       case "ration":
-        setRation(value);
-        console.log("ration:",value);
+        setRation(value)
+        notifyParamsChange()
+        console.log("ration:",value)
         break;
       case "part":
-        setPart(value);
-        console.log("part:",value);
+        setPart(value)
+        notifyParamsChange()
+        console.log("part:",value)
         break;
       default:
         console.log("Issue");
@@ -138,32 +165,38 @@ function App() {
   function handleTriple(field){
     switch(field) {
       case "manpower": 
-        setManpower(manpower*3);
-        break;
+        setManpower(manpower*3)
+        notifyParamsChange()
+        break
       case "ammo":
-        setAmmo(ammo*3);
-        break;
+        setAmmo(ammo*3)
+        notifyParamsChange()
+        break
       case "ration":
-        setRation(ration*3);
-        break;
+        setRation(ration*3)
+        notifyParamsChange()
+        break
       case "part":
-        setPart(part*3);
-        break;
+        setPart(part*3)
+        notifyParamsChange()
+        break
       default:
-        console.log("Issue");
+        console.log("Issue")
     }  
   }
 
   function handleAllowZero(){
-    setAllowZero(!allowZero);
+    setAllowZero(!allowZero)
+    notifyParamsChange()
   }
 
   function ResetWeight() {
-    setManpower(1);
-    setAmmo(1);
-    setRation(1);
-    setPart(1);
-    setAllowZero(true);
+    setManpower(1)
+    setAmmo(1)
+    setRation(1)
+    setPart(1)
+    setAllowZero(true)
+    notifyParamsChange()
   }
 
   function ResetItem() {
@@ -185,9 +218,10 @@ function App() {
     setShowToken(false)
     setShowTotalResource(false)
     setShowWeightedValue(false)
+
+    notifyParamsChange()
   }
   
-
   function ResetAll(){
     // Reset All to default
     selectAllChapters()
@@ -199,6 +233,8 @@ function App() {
     ResetWeight()
 
     ResetItem()
+
+    notifyParamsChange()
   }
 
   function handleItemChange(event, field){
@@ -211,22 +247,27 @@ function App() {
       case 'quickRestoration' :
         setQuickRestoration(value)
         setShowQuickRestoration(value !== defaultQuickRestoration && value !== "")
+        notifyParamsChange()
         break
       case 'quickProduction':
         setQuickProduction(value)
         setShowQuickProduction(value !== defaultQuickProduction && value !== "")
+        notifyParamsChange()
         break 
       case 'dollContract':
         setDollContract(value)
         setShowDollContract(value !== defaultDollContract && value !== "")
+        notifyParamsChange()
         break
       case 'equipmentContract':
         setEquipmentContract(value)
         setShowEquipmentContract(value !== defaultEquipmentContract && value !== "")
+        notifyParamsChange()
         break
       case 'token':
         setToken(value)
         setShowToken(value !== defaultToken && value !== "")
+        notifyParamsChange()
         break
       default:
         console.log("Unknown Error on function handleItemChange", field)
@@ -325,6 +366,10 @@ function App() {
 
     setData(temp_data)
     setStyle(temp_style)
+
+    if (temp_data.length <= 0){
+      setShowEmpty(true)
+    }
   }
 
   return (
@@ -350,8 +395,8 @@ function App() {
         <Row className="h-100">
           <Col xs={true} className="mb-2">
             <Accordion>
-              <Accordion.Item className="dark-grid" eventKey="0">
-                <Accordion.Header className="dark-grid"><h2 className="grid-title">結果顯示選項</h2></Accordion.Header>
+              <Accordion.Item className="accordion-grid" eventKey="0">
+                <Accordion.Header className="accordion-grid"><h2 className="grid-title">結果顯示選項</h2></Accordion.Header>
                 <Accordion.Body>
                   <DisplayMenu
                     showManpower={showManpower} showAmmo={showAmmo} showRation={showRation} showPart={showPart}
@@ -368,7 +413,7 @@ function App() {
 
         <Row className="h-100">
           <Col xs={true} className="mb-2">
-            <div className="dark-grid">
+            <div className="grid p-2">
               <Row className="text-center">
                 <Col xl={{offset:1, span:4}} lg={{offset: 2, span: 2}} md={{offset: 3, span: 2}} sm={{offset: 1, span: 4}} xs={{offset:1, span:4}}>
                   <Button variant="danger" onClick={ResetAll}>全部重設</Button>
@@ -380,6 +425,31 @@ function App() {
             </div>
           </Col>
         </Row>
+
+        {
+          showAlert && 
+          <Row>
+            <Col>
+              <div className="grid alert-grid">
+                <h4 className="title caution-description">提醒</h4>
+                <p className="caution-description section">偵察到參數變更，計算結果重置。</p>
+                <p>此提醒3秒後消失。</p>
+              </div>
+            </Col>
+          </Row>
+        }
+
+        {
+          showEmpty && 
+          <Row>
+            <Col>
+              <div className="grid text-center">
+                <h4 className="title caution-description">未有結果</h4>
+                <p className="section">未能得出後勤組合，請考慮調查部份參數的數值。</p>
+              </div>
+            </Col>
+          </Row>
+        }
 
         {
           data.length > 0 && 

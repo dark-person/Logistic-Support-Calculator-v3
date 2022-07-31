@@ -28,21 +28,6 @@ function DataRow({rowData, styleObj, showField, showManpower, showAmmo, showRati
                 })
             }
         </tr>
-
-        // <tr className="d-flex">
-        //     <td style={styleObj.combination}>{rowData.combination}</td>
-        //     {showManpower && <td style={styleObj.manpower}>{rowData.manpower}</td>}
-		// 	{showAmmo && <td style={styleObj.ammo}>{rowData.ammo}</td>}
-		// 	{showRation && <td style={styleObj.ration}>{rowData.ration}</td>}
-		// 	{showPart && <td style={styleObj.part}>{rowData.part}</td>}
-		// 	{showQuickRestoration && <td style={styleObj.quickRestoration}>{rowData.quickRestoration}</td>}
-		// 	{showQuickProduction && <td style={styleObj.quickProduction}>{rowData.quickProduction}</td>}
-		// 	{showDollContract && <td style={styleObj.tDollContract}>{rowData.tDollContract}</td>}
-		// 	{showEquipmentContract && <td style={styleObj.equipmentContract}>{rowData.equipmentContract}</td>}
-		// 	{showToken && <td style={styleObj.token}>{rowData.token}</td>}
-		// 	{showWeightedValue && <td style={styleObj.value}>{rowData.value}</td>}
-		// 	{showTotalResource && <td style={styleObj.totalResource}>{rowData.totalResource}</td>}
-        // </tr>
     )
 }
 
@@ -135,6 +120,17 @@ function ResultArea({data, styleObj, showManpower, showAmmo, showRation, showPar
             ...defaultSort,
             [item] : newItemOrder
         })
+
+        let temp = localData
+        if (newItemOrder === SORT_ASEC) {
+            temp.sort(table_utils.dynamicSort("-"+item))
+        } else if (newItemOrder === SORT_DESC) {
+            temp.sort(table_utils.dynamicSort(item))
+        } else if (newItemOrder === SORT_NONE) {
+            temp.sort(table_utils.dynamicSort("value"))
+        }
+
+        setLocalData([...temp])
     }
 
     return (

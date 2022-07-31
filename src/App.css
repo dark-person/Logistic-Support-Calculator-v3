@@ -44,13 +44,21 @@
   color: lightgrey;
 }
 
-.dark-grid {
+.accordion-grid {
   background-color: #272727;
   color: white;
   text-align: left;
+  border-radius: 10px !important;
 }
 
-.accordion-header.dark-grid button {
+.alert-grid {
+  border: solid;
+  border-width: 1 1px;
+  border-color: red;
+  text-align: center;
+}
+
+.accordion-header.accordion-grid button {
   background-color: #272727;
   color: white;
 }
