@@ -135,6 +135,8 @@ function ResultArea({data, styleObj, showManpower, showAmmo, showRation, showPar
 
     return (
         <div className="grid scrollable">
+            <p>如果無法看到數據，可以左右拖動（手機），或者在「結果顯示選項」移除不需要的數據。</p>
+            <p>在表格的標題列，點擊可以設定以該欄位進行排序。</p>
             <Table striped bordered hover size="sm" variant="dark">	
                 <thead>
                     <TableHeader styleObj={styleObj} showField={showField} onClick={headerClick} order={sortOrder}/>
