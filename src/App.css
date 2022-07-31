@@ -153,3 +153,8 @@ input.form-control:focus {
 .table>:not(:first-child) {
   border-top: 2px solid darkgray;
 }
+
+td.hightlight {
+  background: lightyellow;
+  color: black;
+}

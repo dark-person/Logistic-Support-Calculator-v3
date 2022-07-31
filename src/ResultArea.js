@@ -1,4 +1,4 @@
-import React, {useState}from "react"
+import React, {useEffect, useState}from "react"
 import './App.css'
 
 import Row from 'react-bootstrap/Row'
@@ -7,44 +7,60 @@ import Table from 'react-bootstrap/Table'
 
 import * as table_utils from './tableUtils.js'
 
-function DataRow({rowData, styleObj, showManpower, showAmmo, showRation, showPart, 
+// Order CONST
+const SORT_NOT_ALLOW = -1
+const SORT_NONE = 0
+const SORT_DESC = 1
+const SORT_ASEC = 2
+
+function DataRow({rowData, styleObj, showField, showManpower, showAmmo, showRation, showPart, 
     showQuickRestoration, showQuickProduction, showEquipmentContract, showDollContract, showToken, 
     showTotalResource, showWeightedValue}){
     return (
         <tr className="d-flex">
-            <td style={styleObj.combination}>{rowData.combination}</td>
-            {showManpower && <td style={styleObj.manpower}>{rowData.manpower}</td>}
-			{showAmmo && <td style={styleObj.ammo}>{rowData.ammo}</td>}
-			{showRation && <td style={styleObj.ration}>{rowData.ration}</td>}
-			{showPart && <td style={styleObj.part}>{rowData.part}</td>}
-			{showQuickRestoration && <td style={styleObj.quickRestoration}>{rowData.quickRestoration}</td>}
-			{showQuickProduction && <td style={styleObj.quickProduction}>{rowData.quickProduction}</td>}
-			{showDollContract && <td style={styleObj.tDollContract}>{rowData.tDollContract}</td>}
-			{showEquipmentContract && <td style={styleObj.equipmentContract}>{rowData.equipmentContract}</td>}
-			{showToken && <td style={styleObj.token}>{rowData.token}</td>}
-			{showWeightedValue && <td style={styleObj.value}>{rowData.value}</td>}
-			{showTotalResource && <td style={styleObj.totalResource}>{rowData.totalResource}</td>}
+            {
+                Object.keys(table_utils.fieldLabel).map((item) => {
+                    if (showField[item]) {
+                        return <td style={styleObj[item]}>{rowData[item]}</td>
+                    } else {
+                        return <></>
+                    }
+                })
+            }
         </tr>
+
+        // <tr className="d-flex">
+        //     <td style={styleObj.combination}>{rowData.combination}</td>
+        //     {showManpower && <td style={styleObj.manpower}>{rowData.manpower}</td>}
+		// 	{showAmmo && <td style={styleObj.ammo}>{rowData.ammo}</td>}
+		// 	{showRation && <td style={styleObj.ration}>{rowData.ration}</td>}
+		// 	{showPart && <td style={styleObj.part}>{rowData.part}</td>}
+		// 	{showQuickRestoration && <td style={styleObj.quickRestoration}>{rowData.quickRestoration}</td>}
+		// 	{showQuickProduction && <td style={styleObj.quickProduction}>{rowData.quickProduction}</td>}
+		// 	{showDollContract && <td style={styleObj.tDollContract}>{rowData.tDollContract}</td>}
+		// 	{showEquipmentContract && <td style={styleObj.equipmentContract}>{rowData.equipmentContract}</td>}
+		// 	{showToken && <td style={styleObj.token}>{rowData.token}</td>}
+		// 	{showWeightedValue && <td style={styleObj.value}>{rowData.value}</td>}
+		// 	{showTotalResource && <td style={styleObj.totalResource}>{rowData.totalResource}</td>}
+        // </tr>
     )
 }
 
-function TableHeader({styleObj, showManpower, showAmmo, showRation, showPart, 
-    showQuickRestoration, showQuickProduction, showEquipmentContract, showDollContract, showToken, 
-    showTotalResource, showWeightedValue}) {
+function TableHeader({styleObj, showField, onClick, order}) {
     return (
         <tr className="d-flex">
-            <th style={styleObj.combination}>{table_utils.fieldLabel.combination}</th>
-            {showManpower && <th style={styleObj.manpower}>{table_utils.fieldLabel.manpower}</th>}
-            {showAmmo && <th style={styleObj.ammo}>{table_utils.fieldLabel.ammo}</th>}
-            {showRation &&<th style={styleObj.ration}>{table_utils.fieldLabel.ration}</th>}
-            {showPart && <th style={styleObj.part}>{table_utils.fieldLabel.part}</th>}
-            {showQuickRestoration && <th style={styleObj.quickRestoration}>{table_utils.fieldLabel.quickRestoration}</th>}
-            {showQuickProduction && <th style={styleObj.quickProduction}>{table_utils.fieldLabel.quickProduction}</th>}
-            {showDollContract && <th style={styleObj.tDollContract}>{table_utils.fieldLabel.tDollContract}</th>}
-            {showEquipmentContract && <th style={styleObj.equipmentContract}>{table_utils.fieldLabel.equipmentContract}</th>}
-            {showToken && <th style={styleObj.token}>{table_utils.fieldLabel.token}</th>}
-            {showWeightedValue && <th style={styleObj.value}>{table_utils.fieldLabel.value}</th>}
-            {showTotalResource && <th style={styleObj.totalResource}>{table_utils.fieldLabel.totalResource}</th>}
+            {
+                Object.keys(table_utils.fieldLabel).map((item) => {
+                    if (showField[item]) {
+                        return <td style={styleObj[item]} onClick={e => onClick(item)} className={order[item] === SORT_NONE ? "normal" : "hightlight"}>
+                            {table_utils.fieldLabel[item]}
+                            {order[item] === SORT_ASEC ? "▲" : order[item] === SORT_DESC ? "▼" : ""}
+                            </td>
+                    } else {
+                        return <></>
+                    }
+                })
+            }
         </tr>
     )
 }
@@ -53,20 +69,84 @@ function TableHeader({styleObj, showManpower, showAmmo, showRation, showPart,
 function ResultArea({data, styleObj, showManpower, showAmmo, showRation, showPart, 
     showQuickRestoration, showQuickProduction, showEquipmentContract, showDollContract, showToken, 
     showTotalResource, showWeightedValue}){
+
+    const defaultSort  = {
+        combination: SORT_NONE,
+        manpower: SORT_NONE,
+        ammo: SORT_NONE,
+        ration: SORT_NONE,
+        part : SORT_NONE,
+        quickRestoration: SORT_NONE,
+        quickProduction : SORT_NONE,
+        equipmentContract: SORT_NONE,
+        tDollContract: SORT_NONE,
+        token: SORT_NONE,
+        value: SORT_NONE,
+        totalResource: SORT_NONE
+    }
+    
+    const [localData, setLocalData] = useState([])
+
+    const [showField, setShowField] = useState({})
+    const [sortOrder, setSortOrder] = useState({
+        ...defaultSort,
+        value : SORT_DESC,
+    })
+
+    // onLoad
+    useEffect(() => {
+        setLocalData(data)
+        // Const Object for tidy parse
+        setShowField({
+            combination: true,
+            manpower: showManpower,
+            ammo: showAmmo,
+            ration: showRation,
+            part : showPart,
+            quickRestoration: showQuickRestoration,
+            quickProduction : showQuickProduction,
+            equipmentContract: showEquipmentContract,
+            tDollContract: showDollContract,
+            token: showToken,
+            value: showWeightedValue,
+            totalResource: showTotalResource
+        })
+
+        //console.log("Local Set")
+    }, [data,
+        showManpower, showAmmo, showRation, showPart, showQuickRestoration, showQuickProduction, showEquipmentContract, showDollContract, showToken, showWeightedValue, showTotalResource])
                 
+    function headerClick(item) {
+
+        if (item === "combination") {
+            return
+        }
+
+        console.log("Header Clicked :",item)
+        
+        let currentOrder = sortOrder[item]
+        console.log("Sort Order Now :",currentOrder)
+
+        let newItemOrder = currentOrder === SORT_NONE ? SORT_DESC : 
+                            (currentOrder === SORT_DESC ? SORT_ASEC : 
+                                currentOrder === SORT_ASEC ? SORT_NONE: SORT_NOT_ALLOW)
+
+        setSortOrder({
+            ...defaultSort,
+            [item] : newItemOrder
+        })
+    }
+
     return (
         <div className="grid scrollable">
             <Table striped bordered hover size="sm" variant="dark">	
                 <thead>
-                    <TableHeader styleObj={styleObj} showManpower={showManpower} showAmmo={showAmmo} showRation={showRation} showPart={showPart} 
-                        showQuickRestoration={showQuickRestoration} showQuickProduction={showQuickProduction} 
-                        showEquipmentContract={showEquipmentContract} showDollContract={showDollContract} 
-                        showToken={showToken} showTotalResource={showTotalResource}
-                        showWeightedValue={showWeightedValue}/>
+                    <TableHeader styleObj={styleObj} showField={showField} onClick={headerClick} order={sortOrder}/>
                 </thead>
                 <tbody>
-                    {data.map((item, index) => 
-                        <DataRow key={"data-"+index} rowData={item} styleObj={styleObj} showManpower={showManpower} showAmmo={showAmmo} showRation={showRation} showPart={showPart} 
+                    {localData.map((item, index) => 
+                        <DataRow key={"data-"+index} rowData={item} styleObj={styleObj} showField={showField}
+                        showManpower={showManpower} showAmmo={showAmmo} showRation={showRation} showPart={showPart} 
                         showQuickRestoration={showQuickRestoration} showQuickProduction={showQuickProduction} 
                         showEquipmentContract={showEquipmentContract} showDollContract={showDollContract} 
                         showToken={showToken} showTotalResource={showTotalResource}

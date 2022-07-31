@@ -32,9 +32,30 @@ export const getStyleSheet = (raw_data, field_name) =>  {
         }
     } else {
         return {
-            minWidth: getColumnWidth(raw_data, field_name, fieldLabel[field_name]),
+            minWidth: getColumnWidth(raw_data, field_name, fieldLabel[field_name]+ "▲"),
             width: "100%",
             textAlign: "center"
         }
+    }
+}
+
+// Default Order: Desc Order
+export function dynamicSort(property) {
+    var sortOrder = 1;
+    if(property[0] === "-") {
+        sortOrder = -1;
+        property = property.substr(1);
+    }
+    return function (a,b) {
+        var result = (a[property] > b[property]) ? -1 :
+          (a[property] < b[property]) ? 1 : 
+            (a["value"] > b["value"]) ? -1 :
+              (a["value"] < b["value"]) ? 1 : 0 ;
+        
+        // console.log("dynamicSort[",property,"(",sortOrder,")] - ",
+        //   a.combination,"(",a[property],",",a.value,")","&",
+        //   b.combination,"(",b[property],",",b.value,")",
+        //   " Result : ",result);
+        return result * sortOrder;
     }
 }
