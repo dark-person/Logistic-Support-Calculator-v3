@@ -16,6 +16,7 @@ function ResourceRow({name, state, handler, triple, button_hidden}) {
             <Col xs="auto"><Form.Label>{name}</Form.Label></Col>
             <Col xs="auto">
                 <Form.Control 
+                    className="resource-input mr-1"
                     as="input"
                     type="number"
                     min="0"
@@ -24,8 +25,6 @@ function ResourceRow({name, state, handler, triple, button_hidden}) {
                     onChange={handler}
                     onWheel={(e) => e.target.blur()}
                 />
-            </Col>
-            <Col xs="auto">
                 {button_hidden ? ' ': <Button variant="outline-purple" onClick={triple}>x3</Button>}
             </Col>
         </Form>
