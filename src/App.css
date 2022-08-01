@@ -135,6 +135,7 @@ input.form-control:focus {
 input.resource-input {
   display: inline;
   margin-right: 0.5em;
+  width: 10em !important;
 }
 
 /* ===== Form Label =====*/
