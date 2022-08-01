@@ -132,6 +132,11 @@ input.form-control:focus {
   width: 5em !important;
 }
 
+input.resource-input {
+  display: inline;
+  margin-right: 0.5em;
+}
+
 /* ===== Form Label =====*/
 .form-label {
   font-weight: bold;
