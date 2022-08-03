@@ -118,14 +118,13 @@ input.form-control {
   background-color: #272727;
   color: lightgrey;
   height:-webkit-fill-available;
-  width:auto;
+  max-width: 10rem;
 }
 
 input.form-control:focus {
   border: 3px solid white;
   background-color: #272727;
   color: white;
-  max-width: 10rem;
 }
 
 .item-input {
