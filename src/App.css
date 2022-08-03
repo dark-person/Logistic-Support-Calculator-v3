@@ -125,7 +125,7 @@ input.form-control:focus {
   border: 3px solid white;
   background-color: #272727;
   color: white;
-  width:auto;
+  max-width: 10rem;
 }
 
 .item-input {
