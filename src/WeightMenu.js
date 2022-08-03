@@ -25,8 +25,11 @@ function ResourceRow({name, state, handler, triple, button_hidden}) {
                     onChange={handler}
                     onWheel={(e) => e.target.blur()}
                 />
-                {button_hidden ? ' ': <Button variant="outline-purple" onClick={triple}>x3</Button>}
-            </Col>
+             </Col>
+             <Col xs="auto">
+                {button_hidden ? <Button variant="outline-purple" className="opacity-0">x3</Button> 
+                    : <Button variant="outline-purple" onClick={triple}>x3</Button>}
+             </Col>
         </Form>
     )
 }
