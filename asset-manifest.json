@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/Logistic-Support-Calculator-v3/static/css/main.01b4d20d.css",
+    "main.js": "/Logistic-Support-Calculator-v3/static/js/main.9a206bd3.js",
+    "static/js/787.fc40da6d.chunk.js": "/Logistic-Support-Calculator-v3/static/js/787.fc40da6d.chunk.js",
+    "static/media/waifu-min.gif": "/Logistic-Support-Calculator-v3/static/media/waifu-min.67b9013aa614c6806970.gif",
+    "index.html": "/Logistic-Support-Calculator-v3/index.html",
+    "main.01b4d20d.css.map": "/Logistic-Support-Calculator-v3/static/css/main.01b4d20d.css.map",
+    "main.9a206bd3.js.map": "/Logistic-Support-Calculator-v3/static/js/main.9a206bd3.js.map",
+    "787.fc40da6d.chunk.js.map": "/Logistic-Support-Calculator-v3/static/js/787.fc40da6d.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.01b4d20d.css",
+    "static/js/main.9a206bd3.js"
+  ]
+}
