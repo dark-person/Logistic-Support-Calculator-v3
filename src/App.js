@@ -465,6 +465,9 @@ function App() {
        
 
       </Container>
+      
+      <hr/>
+      <p>關於此測試版本，如有任何問題，請聯絡 巴哈姆特用戶 <a href="https://home.gamer.com.tw/homeindex.php?owner=darkperson">DarkPerson</a></p>
 
     </div>
   );
